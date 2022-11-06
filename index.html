@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Battle</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins',sans-serif;
+        }
+        .container{
+            width: 100%;
+            height: 100vh;
+            background-color: black;
+            background: url(back1.gif);
+            background: rgb(131, 83, 83);
+            
+            background-size: cover;
+            position: relative;
+            outline: 4px solid white;
+
+            animation: coloring 10s infinite;
+        }
+        @keyframes coloring {
+            0%,100%{
+                filter: hue-rotate(0deg);
+            }
+            50%{
+                filter: hue-rotate(360deg);
+            }
+        }
+        .home{
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            
+            left: 0;
+            top: 0;
+            transition: 1.4s;
+            
+        }
+        .home img{
+            position: absolute;
+            width: 98%;
+            height: 96%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            border-radius: 40px;
+        }
+        .home h1{
+            color: white;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -20%;
+            font-size: 70px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: anim1 2s forwards;
+            opacity: 0;
+        }
+        .home h3{
+            color: white;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 90%;
+            font-size: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            
+            opacity: 1;
+        }
+        @keyframes anim1{
+            0%{
+                opacity: 0;
+                top: -20%;
+            }
+            100%{
+                top: 20%;
+                opacity: 1;
+            }
+        }
+        .home button{
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -20%;
+            font-size: 30px;
+            cursor:pointer;
+            padding:  10px 20px;
+            transform-origin: left;
+            border-radius: 10px;
+            border: none;
+            animation: anim2 2s forwards;
+            opacity: 0;
+            transition: 1s;
+        }
+        .home button:hover{
+            transform: scale(1.3) translateX(-50%);
+            background: crimson;
+
+            color: white;
+        }
+        @keyframes anim2{
+            0%{
+                opacity: 0;
+                top: -20%;
+            }
+            100%{
+                top: 42%;
+                opacity: 1;
+            }
+        }
+        .game{
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            left: 100%;
+            /* left: 0%; */
+            top: 0;
+            transition: 1s;
+            opacity: 0;
+            /* opacity: 1; */
+            pointer-events: none;
+            /* pointer-events: all; */
+            background: linear-gradient(to left, rgb(240, 174, 174), white)
+        }
+        .game img{
+            position: absolute;
+            width: 98%;
+            height: 96%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            border-radius: 40px;
+        }
+        .you{
+            width: 350px;
+            height: 350px;
+            background: white;
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        .bot{
+            width: 350px;
+            height: 350px;
+            background: white;
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            opacity: 0;
+            transform: translateY(-50%);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: center;
+            pointer-events: none;
+ 
+        }
+        .cell,.cellr{
+            width: 86px;
+            height: 86px;
+            background: black;
+            position: relative;
+            cursor: pointer;
+            background-size: 100% 100%;
+            /* transition: 0.1s; */
+        }
+        
+        .cell:hover{
+            border: 1.6px solid white;
+            background: rgb(255, 250, 240);
+        }
+        .cellr:hover::after{
+            border: 1.6px solid white;
+            background: rgb(255, 250, 240);
+            content: "Attack!";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border-radius: 10px;
+            padding: 5px 10px;
+            transform: translate(-50%,-50%);
+            color: green;
+        }
+        .left{
+            width: 80px;
+            height: 246px;
+           /*  background: blanchedalmond; */
+            position: absolute;
+            bottom: 0%;
+            right: -60%;
+            transition: 0.5s;
+            border: 4px solid red;
+            border-radius: 20px;
+            animation: vibration 2s infinite ;
+
+           
+            
+        }
+        @keyframes vibration1 {
+            0%,100%{
+                background: rgb(212, 3, 3);
+            }
+            50%{
+                background: white;
+            }
+            
+        }
+        .left img{
+            object-fit: cover;
+            width: 130%;
+        }
+        .middle{
+            width: 80px;
+            height: 80px;
+           /*  background: blanchedalmond; */
+            position: absolute;
+            bottom: 0%;
+            right: -30%;
+            animation: vibration 2s 0.2s infinite ;
+            border-radius: 20px;
+        }
+        .middle img{
+            object-fit: contain;
+            width: 150%;
+        }
+        .rot{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            right: 10%;
+            bottom: 30%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            border-radius: 25px;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+        .rot:hover{
+            border: 2px solid red;
+            transform: rotate(180deg) scale(1.4);
+        }
+        .rot img{
+            width: 90%;
+        }
+        @keyframes vibration {
+            0%,100%{
+
+            }
+            50%{
+
+            }
+        }
+        .game h1{
+            color: blanchedalmond;
+            position: absolute;
+            right: 10%;top: 10%;
+            font-size: 48px;
+            text-transform: uppercase;
+            }
+            .start{
+                position: absolute;
+                background: white;
+                padding: 10px 20px;
+                right: 10%;
+                cursor: pointer;
+                top: 25%;
+                border-radius: 10px;
+                transition: 1s;
+                opacity: 0.2;
+                pointer-events: none;
+            }
+            .start:hover{
+                border-radius: 20px;
+                transform: scale(1.2);
+            }
+            .yourturn{
+                position: absolute;
+                background: rgb(255, 255, 255);
+                padding: 8px 16px;
+                right: 10%;
+                cursor: pointer;
+                top:10%;
+                color: brown;
+                border-radius: 10px;
+                transition: 1s;
+                opacity: 0;
+            }
+            .robotturn{
+                position: absolute;
+                background: rgb(255, 255, 255);
+                padding: 8px 16px;
+                right: 75%;
+                cursor: pointer;
+                top:10%;
+                color: brown;
+                border-radius: 10px;
+                transition: 1s;
+                opacity: 0;
+            }
+            .result{
+                width: 100%;
+                height: 100vh;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                /* background: black; */
+                transition: 1s;
+
+            }
+            .result h1{
+                color: white;
+                position: absolute;
+                left: 50%;
+                font-size: 50px;
+                transform: translateX(-50%);
+                top: 30%;
+            }
+            .result button{
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 49%;
+            font-size: 30px;
+            cursor:pointer;
+            padding:  10px 20px;
+            transform-origin: left;
+            border-radius: 10px;
+            border: none;
+            /* animation: anim2 5s forwards; */
+            opacity: 1;
+            transition: 1s;
+        }
+        .result button:hover{
+            transform: scale(1.3) translateX(-50%);
+            background: crimson;
+
+            color: white;
+        }
+        .youvsrobot{
+            animation: appear 7s;
+            opacity: 0;
+        }
+        @keyframes appear {
+            0%{
+                opacity: 0;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
+        
+       
+        
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="home">
+            <img src="back1.gif" alt="">
+            <h1>Space Battle</h1>
+           <button onclick="play()" >PLAY VS ROBOT</button>
+           <h3 class="youvsrobot"></h3>
+
+        </div>
+        <div class="game">
+            
+            <img src="back1.gif" alt="">
+            <h1 class="place">Place your spaceships</h1>
+            <div class="start">Start The Combat</div>
+            <div class="you">
+                
+                <div class="cell c1 _1" number='1' onclick="cell(this)"><div></div></div>
+                <div class="cell c2 _2" number='2' onclick="cell(this)"><div></div></div>
+                <div class="cell c3 _3" number='3' onclick="cell(this)"><div></div></div>
+                <div class="cell c4 _4" number='4' onclick="cell(this)"><div></div></div>
+                <div class="cell c5 _5" number='5' onclick="cell(this)"><div></div></div>
+                <div class="cell c6 _6" number='6' onclick="cell(this)"><div></div></div>
+                <div class="cell c7 _7" number='7' onclick="cell(this)"><div></div></div>
+                <div class="cell c8 _8" number='8' onclick="cell(this)"><div></div></div>
+                <div class="cell c9 _9" number='9' onclick="cell(this)"><div></div></div>
+                <div class="cell c10 _10" number='10' onclick="cell(this)"><div></div></div>
+                <div class="cell c11 _11" number='11' onclick="cell(this)"><div></div></div>
+                <div class="cell c12 _12" number='12' onclick="cell(this)"><div></div></div>
+                <div class="cell c13 _13" number='13' onclick="cell(this)"><div></div></div>
+                <div class="cell c14 _14" number='14' onclick="cell(this)"><div></div></div>
+                <div class="cell c15 _15" number='15' onclick="cell(this)"><div></div></div>
+                <div class="cell c16 _16" number='16' onclick="cell(this)"><div></div></div>
+
+                <div class="left">
+                    <img src="ship.png" alt="">
+                </div>
+                <div class="middle">
+                    <img src="ship2.png" alt="">
+                </div>
+            </div>
+            <h2 class="yourturn">Attack! it's your turn</h2>
+            <h2 class="robotturn">Robot turn</h2>
+            <div class="bot">
+                
+                <div class="cellr r1 " number='1'  onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r2 " number='2'  onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r3 " number='3'  onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r4" number='4' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r5 " number='5' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r6 " number='6' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r7 " number='7' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r8 " number='8' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r9 " number='9' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r10 " number='10' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r11 " number='11' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r12 " number='12' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r13 " number='13' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r14 " number='14' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r15 " number='15' onclick="cell_bot(this)"><div></div></div>
+                <div class="cellr r16 " number='16' onclick="cell_bot(this)"><div></div></div>
+
+                
+            </div>
+            <div class="rot" onclick="rotate()"><img src="rotate.png" alt=""></div>
+            
+            
+
+
+
+        </div>
+        <div class="result">
+            <h1 class="gameover">Game Over: You Won!</h1>
+            <button onclick="document.location.reload(true)">Play Again</button>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script>
+        var retrievedObject = localStorage.getItem('you');
+        var retrievedObject2 = localStorage.getItem('robot');
+        if(retrievedObject==null && retrievedObject2 ==null){
+            document.querySelector('.youvsrobot').innerHTML= 'You 0:0 Robot';
+        }else if(retrievedObject==null && retrievedObject2 !=null ){
+            var robot = localStorage.getItem('robot');
+            document.querySelector('.youvsrobot').innerHTML= 'You 0:'+robot+' Robot';
+        }else if(retrievedObject!=null && retrievedObject2 ==null ){
+            var you = localStorage.getItem('you');
+            document.querySelector('.youvsrobot').innerHTML= 'You '+you+':0 Robot';
+        }else{
+            
+            var you = localStorage.getItem('you');
+            var robot = localStorage.getItem('robot');
+            
+            
+            document.querySelector('.youvsrobot').innerHTML= 'You '+you+':'+robot+' Robot';
+        }
+        
+        var m = 0; //which element we' re on
+        var r = 0; //0 means vertical // 1 means horizontal
+        function play(){
+            document.querySelector('.home').style.left=-100+'%';
+            document.querySelector('.game').style.opacity=1;
+            document.querySelector('.game').style.left=0+'%';
+            document.querySelector('.game').style.pointerEvents='all';
+
+        }
+        
+        function rotate(){
+
+            
+            if(r==0 && m == 0){r=1
+                document.querySelector('.left').style.transform='rotate('+90+'deg)';
+            }else if(r==1 && m == 0){
+                r=0
+                document.querySelector('.left').style.transform='rotate('+0+'deg)';
+            }
+
+            
+        }
+        var table = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        function cell(element){
+            var number1 = element.getAttribute('number');
+            
+            if(r==0 && m==0){
+                if(number1==1 || number1==5){
+                    table[0]=1;
+                    table[4]=1;
+                    table[8]=1;
+                    
+                    document.querySelector('.c1').style.pointerEvents='none';
+                    document.querySelector('.c5').style.pointerEvents='none';
+                    document.querySelector('.c9').style.pointerEvents='none';
+
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=3.5+'px';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=8+'px';
+                    
+                    console.log(table);
+                    m = 1;
+                }
+                if(number1==2|| number1==6){
+                    table[1]=1;
+                    table[5]=1;
+                    table[9]=1;
+                    
+                    document.querySelector('.c2').style.pointerEvents='none';
+                    document.querySelector('.c6').style.pointerEvents='none';
+                    document.querySelector('.c10').style.pointerEvents='none';
+
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=26+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=8+'px';
+                    
+                    
+                    m = 1;
+                }
+                if(number1==3|| number1==7){
+                    table[2]=1;
+                    table[6]=1;
+                    table[10]=1;
+                    
+                    document.querySelector('.c3').style.pointerEvents='none';
+                    document.querySelector('.c7').style.pointerEvents='none';
+                    document.querySelector('.c11').style.pointerEvents='none';
+
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=51+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=8+'px';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==4|| number1==8){
+                    table[3]=1;
+                    table[7]=1;
+                    table[11]=1;
+                    
+                    document.querySelector('.c4').style.pointerEvents='none';
+                    document.querySelector('.c8').style.pointerEvents='none';
+                    document.querySelector('.c12').style.pointerEvents='none';
+
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=76+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=8+'px';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==9|| number1==13){
+                    table[4]=1;
+                    table[8]=1;
+                    table[12]=1;
+                    
+                    document.querySelector('.c5').style.pointerEvents='none';
+                    document.querySelector('.c9').style.pointerEvents='none';
+                    document.querySelector('.c13').style.pointerEvents='none';
+
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=3.5+'px';
+                    document.querySelector('.left').style.bottom=8+'px';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==10|| number1==14){
+                    table[5]=1;
+                    table[9]=1;
+                    table[13]=1;
+                    
+                    document.querySelector('.c6').style.pointerEvents='none';
+                    document.querySelector('.c10').style.pointerEvents='none';
+                    document.querySelector('.c14').style.pointerEvents='none';
+
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=26+'%';
+                    document.querySelector('.left').style.bottom=8+'px';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==11|| number1==15){
+                    table[6]=1;
+                    table[10]=1;
+                    table[14]=1;
+                    
+                    document.querySelector('.c7').style.pointerEvents='none';
+                    document.querySelector('.c11').style.pointerEvents='none';
+                    document.querySelector('.c15').style.pointerEvents='none';
+
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=51+'%';
+                    document.querySelector('.left').style.bottom=8+'px';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==12|| number1==16){
+                    table[7]=1;
+                    table[11]=1;
+                    table[15]=1;
+                    
+                    document.querySelector('.c8').style.pointerEvents='none';
+                    document.querySelector('.c12').style.pointerEvents='none';
+                    document.querySelector('.c16').style.pointerEvents='none';
+
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=76+'%';
+                    document.querySelector('.left').style.bottom=8+'px';
+                    
+                   
+                    m = 1;
+                }
+            }else if(r==1 && m==0){
+                if(number1==1 || number1==2){
+                    table[0]=1;
+                    table[1]=1;
+                    table[2]=1;
+                    
+                    document.querySelector('.c1').style.pointerEvents='none';
+                    document.querySelector('.c5').style.pointerEvents='none';
+                    document.querySelector('.c9').style.pointerEvents='none';
+
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=26+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=-22.5+'%';
+                    
+                    console.log(table);
+                    m = 1;
+                }
+                if(number1==5 || number1==6){
+                    table[4]=1;
+                    table[5]=1;
+                    table[6]=1;
+                    
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=26+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=2.5+'%';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==9 || number1==10){
+                    table[8]=1;
+                    table[9]=1;
+                    table[10]=1;
+                    
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=26+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=27.5+'%';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==13 || number1==14){
+                    table[12]=1;
+                    table[13]=1;
+                    table[14]=1;
+                    
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=26+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=52.2+'%';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==3 || number1==4){
+                    /* table[2]=1;
+                    table[3]=1;
+                    table[4]=1; */
+                    table[1]=1;
+                    table[2]=1;
+                    table[3]=1;
+                    
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=51+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=-22.5+'%';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==7 || number1==8){
+                    table[5]=1;
+                    table[6]=1;
+                    table[7]=1;
+                    
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=51+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=2.5+'%';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==11 || number1==12){
+                    table[10]=1;
+                    table[11]=1;
+                    table[12]=1;
+                    
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=51+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=27.5+'%';
+                    
+                   
+                    m = 1;
+                }
+                if(number1==15 || number1==16){
+                    table[13]=1;
+                    table[14]=1;
+                    table[15]=1;
+                    
+                    document.querySelector('.left').style.right='clear';
+                    document.querySelector('.left').style.left=51+'%';
+                    document.querySelector('.left').style.bottom='clear';
+                    document.querySelector('.left').style.top=52.2+'%';
+                    
+                   
+                    m = 1;
+                }
+            }else if(m==1){
+                if(number1==1){
+                    table[0]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=1+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=1+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==2){
+                    table[1]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=26+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=1+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==3){
+                    table[2]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=51+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=1+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==4){
+                    table[3]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=76+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=1+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==5){
+                    table[4]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=1+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=26+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==6){
+                    table[5]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=26+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=26+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==7){
+                    table[6]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=51+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=26+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==8){
+                    table[7]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=76+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=26+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==9){
+                    table[8]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=1+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=51+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==10){
+                    table[9]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=26+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=51+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==11){
+                    table[10]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=51+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=51+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==12){
+                    table[11]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=76+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=51+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==13){
+                    table[12]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=1+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=76+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==14){
+                    table[13]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=26+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=76+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==15){
+                    table[14]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=51+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=76+'%';
+                    
+                   
+                    m = 2;
+                }
+                if(number1==16){
+                    table[15]=1;
+                    
+                    
+                    document.querySelector('.middle').style.right='clear';
+                    document.querySelector('.middle').style.left=76+'%';
+                    document.querySelector('.middle').style.bottom='clear';
+                    document.querySelector('.middle').style.top=76+'%';
+                    
+                   
+                    m = 2;
+                }
+            }
+            
+
+        }
+        ppp =0;
+        document.addEventListener('click',()=>{
+            if(m==1 && ppp==0){
+            document.querySelector('.middle').style.border=4+'px solid red';
+            document.querySelector('.rot').style.display='none';
+            document.querySelector('.left').style.border='none';
+            ppp=11;
+            }
+            if(m==2){
+                document.querySelector('.middle').style.border='none';
+                document.querySelector('.start').style.opacity=1;
+                document.querySelector('.start').style.pointerEvents='all';
+                var b1 = document.querySelectorAll('.cell');
+                /* b1.forEach(b=>{
+                    b.style.background = 'black'
+                }) */
+            }
+
+        })
+        var start = document.querySelector('.start');
+        var table_bot = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        var _2 = [0,0];
+        var attack  = 0;
+        start.addEventListener('click',()=>{
+            document.querySelector('.left').style.opacity=0.4;
+            document.querySelector('.middle').style.opacity=0.4;
+            start.style.display='none';
+            var alls = document.querySelectorAll('.cell')
+            alls.forEach(all=>{
+                all.style.pointerEvents='none'
+            })
+            document.querySelector('.place').style.display='none';
+            document.querySelector('.bot').style.opacity=1;
+            document.querySelector('.bot').style.pointerEvents='all';
+            
+            var picker = Math.floor(Math.random()*table.length)+1;
+            
+            if(picker == 1){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[0]=1;
+                    table_bot[1]=1;
+                    table_bot[2]=1;
+                }else{
+                    table_bot[0]=1;
+                    table_bot[4]=1;
+                    table_bot[8]=1;
+                }
+                
+            }
+            if(picker == 2){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[1]=1;
+                    table_bot[2]=1;
+                    table_bot[3]=1;
+                }else{
+                    table_bot[1]=1;
+                    table_bot[5]=1;
+                    table_bot[9]=1;
+                }
+                
+            }
+            if(picker == 3){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[2]=1;
+                    table_bot[1]=1;
+                    table_bot[0]=1;
+                }else{
+                    table_bot[2]=1;
+                    table_bot[6]=1;
+                    table_bot[10]=1;
+                }
+                
+            }
+            if(picker == 4){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[3]=1;
+                    table_bot[2]=1;
+                    table_bot[1]=1;
+                }else{
+                    table_bot[3]=1;
+                    table_bot[7]=1;
+                    table_bot[11]=1;
+                }
+                
+            }
+            if(picker == 5){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[4]=1;
+                    table_bot[5]=1;
+                    table_bot[6]=1;
+                }else{
+                    table_bot[4]=1;
+                    table_bot[8]=1;
+                    table_bot[12]=1;
+                }
+                
+            }
+            if(picker == 6){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[5]=1;
+                    table_bot[6]=1;
+                    table_bot[7]=1;
+                }else{
+                    table_bot[5]=1;
+                    table_bot[9]=1;
+                    table_bot[13]=1;
+                }
+                
+            }
+            if(picker == 7){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[4]=1;
+                    table_bot[5]=1;
+                    table_bot[6]=1;
+                }else{
+                    table_bot[4]=1;
+                    table_bot[8]=1;
+                    table_bot[12]=1;
+                }
+                
+            }
+            if(picker == 8){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[5]=1;
+                    table_bot[6]=1;
+                    table_bot[7]=1;
+                }else{
+                    table_bot[7]=1;
+                    table_bot[11]=1;
+                    table_bot[15]=1;
+                }
+                
+            }
+            if(picker == 9){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[8]=1;
+                    table_bot[9]=1;
+                    table_bot[10]=1;
+                }else{
+                    table_bot[4]=1;
+                    table_bot[8]=1;
+                    table_bot[12]=1;
+                }
+                
+            }
+            if(picker == 10){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[8]=1;
+                    table_bot[9]=1;
+                    table_bot[10]=1;
+                }else{
+                    table_bot[5]=1;
+                    table_bot[9]=1;
+                    table_bot[13]=1;
+                }
+                
+            }
+            if(picker == 11){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[9]=1;
+                    table_bot[10]=1;
+                    table_bot[11]=1;
+                }else{
+                    table_bot[6]=1;
+                    table_bot[10]=1;
+                    table_bot[14]=1;
+                }
+                
+            }
+            if(picker == 12){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[9]=1;
+                    table_bot[10]=1;
+                    table_bot[11]=1;
+                }else{
+                    table_bot[7]=1;
+                    table_bot[11]=1;
+                    table_bot[15]=1;
+                }
+                
+            }
+            if(picker == 13){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[12]=1;
+                    table_bot[13]=1;
+                    table_bot[14]=1;
+                }else{
+                    table_bot[4]=1;
+                    table_bot[8]=1;
+                    table_bot[12]=1;
+                }
+                
+            }
+            if(picker == 14){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[12]=1;
+                    table_bot[13]=1;
+                    table_bot[14]=1;
+                }else{
+                    table_bot[5]=1;
+                    table_bot[9]=1;
+                    table_bot[13]=1;
+                }
+                
+            }
+            if(picker == 15){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[13]=1;
+                    table_bot[14]=1;
+                    table_bot[15]=1;
+                }else{
+                    table_bot[6]=1;
+                    table_bot[10]=1;
+                    table_bot[14]=1;
+                }
+                
+            }
+            if(picker == 16){
+                var picker2 = Math.floor(Math.random()*_2.length)+1;
+                if(picker2==1){
+                    table_bot[13]=1;
+                    table_bot[14]=1;
+                    table_bot[15]=1;
+                }else{
+                    table_bot[7]=1;
+                    table_bot[11]=1;
+                    table_bot[15]=1;
+                }
+                
+            }
+            
+            var choose_single = 0;
+            var count = 0;
+            while(choose_single==0){
+                console.log('try')
+                var picker_single = Math.floor(Math.random()*table_bot.length);
+                console.log(picker_single)
+                count=0;
+               
+                    if(table_bot[picker_single]==1){
+                        count++;
+                    }
+
+                
+                if(count == 0){
+                    table_bot[picker_single]=1;
+                    document.querySelector('.yourturn').style.opacity=1;
+                    attack =1;
+                    choose_single++;
+                }
+            }
+            console.log(table_bot+'this')
+
+        })
+        var you_chosen = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        var bot_chosen = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        var counting_=0;
+        function cell_bot(element){
+            
+            document.querySelector('.bot').style.animation=`vibration1 0.2s infinite`;
+            setTimeout(function(){
+                document.querySelector('.bot').style.animation=``;
+                var number1 = element.getAttribute('number')-1;
+            if(attack==1 && you_chosen[number1]==0){
+                
+               
+                if(table_bot[number1]==1){
+                    element.style.backgroundImage = "url('check-green.gif')"; 
+                    attack=0;
+                    element.style.pointerEvents='none'
+                    document.querySelector('.yourturn').style.opacity=0;
+                    you_chosen[number1]=1;
+                    const myTimeout = setTimeout(bot_choosing, 1000);
+                    //bot_choosing();
+                 
+                  
+                }else{
+                    
+                    element.style.backgroundImage = "url('red.png')"; 
+                    attack=0;
+                    element.style.pointerEvents='none'
+                    you_chosen[number1]=1;
+                    document.querySelector('.yourturn').style.opacity=0;
+                    const myTimeout = setTimeout(bot_choosing, 1000);
+                }
+            }
+            counting_=0;
+            console.log(you_chosen+' thsichosen')
+            console.log(counting_+' before')
+            for(var i=0; i<you_chosen.length;i++){
+                if(you_chosen[i]=table_bot[i] &&you_chosen[i]==1 ){
+                    counting_++;
+                }
+            }
+            if(counting_==4){
+                var you1 = localStorage.getItem('you');
+                if(you1==null){
+                    localStorage.setItem("you", 1);
+                }else{
+                    you1++;
+                    localStorage.setItem("you", you1);
+                }
+                const myTimeout = setTimeout(function(){
+                    //alert('vous avez gagne')
+                    document.querySelector('.game').style.top=-100+'%';
+                    document.querySelector('.result').style.top=0+'%';
+                    document.querySelector('.gameover').innerHTML='Game Over: You Won!';
+                }, 1000);
+                
+            }
+            
+            console.log(counting_+' after')
+            },700);
+            
+
+        }
+        var counting__=0;
+        function bot_choosing(){
+            
+            document.querySelector('.robotturn').style.opacity=1;
+            setTimeout(function(){
+                console.log('entered1')
+            var number2 = Math.floor(Math.random()*bot_chosen.length)+1;
+            console.log('nmb2: '+number2)
+            if(attack==0 && bot_chosen[number2-1]==0){
+                console.log('entered2')
+                if(table[number2-1]==1){
+                    console.log('entered3')
+                    var s = '._'+number2
+                    var e1 = document.querySelector(s);
+                    console.log(e1)
+                    //e1.style.background='red'
+                    e1.style.backgroundImage = "url('check-green.gif')";
+                    
+                    attack=1;
+                    document.querySelector('.yourturn').style.opacity=1;
+                    bot_chosen[number2-1]=1;
+                    console.log(bot_chosen+'botchoosen')
+                 
+                  
+                }else{
+                    console.log('entered4')
+                    var s = '._'+number2
+                    var e1 = document.querySelector(s);
+                    console.log(e1)
+                    //e1.style.background='red'
+                    e1.style.backgroundImage = "url('red.png')"; 
+                    attack=1;
+                    bot_chosen[number2-1]=1;
+                    document.querySelector('.yourturn').style.opacity=1;
+                    console.log(bot_chosen+'botchoosen')
+                }
+            }else{
+                bot_choosing();
+            }
+           
+            document.querySelector('.robotturn').style.opacity=0;
+            counting__=0;
+            for(var i=0; i<bot_chosen.length;i++){
+                if(bot_chosen[i]==table[i] &&bot_chosen[i]==1){
+                    counting__++;
+                }
+            }
+            if(counting__==4){
+                
+                
+                var robot1 = localStorage.getItem('robot');
+                if(robot1==null){
+                    localStorage.setItem("robot", 1);
+                }else{
+                    robot1++;
+                    localStorage.setItem("robot", robot1);
+                }
+
+                const myTimeout = setTimeout(function(){
+                    document.querySelector('.result').style.top=0+'%';
+                    document.querySelector('.game').style.top=-100+'%';
+                    document.querySelector('.gameover').innerHTML='Game Over: Robot Won!';
+                    //alert('vous avez perdu')
+                }, 1000);
+                
+            }
+            },800);
+            
+                
+        }
+        
+
+            
+    </script>
+</body>
+</html>
